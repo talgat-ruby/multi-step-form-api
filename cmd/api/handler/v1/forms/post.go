@@ -24,7 +24,7 @@ type PostRequestBody struct {
 	Phone  string  `xml:"phone" json:"phone" form:"phone" validate:"required,e164"`
 	Plan   string  `xml:"plan" json:"plan" form:"plan" validate:"required,oneof=arcade advanced pro"`
 	Period string  `xml:"period" json:"period" form:"period" validate:"required,oneof=monthly yearly"`
-	AddOns *AddOns `xml:"addOns" json:"addOns" form:"addOns"`
+	AddOns *AddOns `xml:"addOns" json:"addOns" form:"addOns" validate:"required"`
 }
 
 func (h *Handler) Add(c echo.Context) error {
@@ -75,7 +75,7 @@ type validationError struct {
 	AddOns *string `json:"addOns,omitempty"`
 }
 
-func (h *Handler) postRequestBody(ctx context.Context, c echo.Context) (*PostRequestBody, error) {
+func (h *Handler) postRequestBody(_ context.Context, c echo.Context) (*PostRequestBody, error) {
 	reqBody := new(PostRequestBody)
 	if err := c.Bind(reqBody); err != nil {
 		return nil, err
