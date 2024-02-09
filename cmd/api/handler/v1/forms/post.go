@@ -39,7 +39,7 @@ func (h *Handler) Add(c echo.Context) error {
 			"path", c.Path(),
 			"error", err,
 		)
-		return c.String(http.StatusBadRequest, "bad request")
+		return c.JSON(http.StatusBadRequest, response.Error{Error: err.Error()})
 	}
 
 	if validationError := h.postRequestValidationErrors(ctx, reqBody); validationError != nil {
